@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { WithMarginConfig, withMargin } from '../mixins';
+import { WithSpacingConfig, withSpacing, WithColorConfig, withColor } from '../mixins';
 
-type BoxProps = WithMarginConfig;
+export type BoxProps = WithSpacingConfig & WithColorConfig;
 
-export const Box = styled.div<BoxProps>(withMargin);
+export const Box = styled.div<BoxProps>(withSpacing, withColor);
 
 Box.displayName = 'Box';

@@ -2,37 +2,52 @@ import { Breakpoint, Space, Theme } from './Theme';
 
 export type CSSUnit = 'px' | '%' | 'rem' | 'em';
 
-export type Length = [number, CSSUnit] | number | Space;
-
 export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
+
+export type Length = `${number}${CSSUnit}` | number | Space;
 
 export type ResponsiveLength = ResponsiveProp<Length>;
 
-type GetLengthValueConfig = {
-    length: Length | ResponsiveLength;
-    theme: Theme;
-    breakpoint?: Breakpoint;
-};
+export type Size = `${number}${CSSUnit}` | number;
 
-export const getLengthValue = ({ length, theme, breakpoint }: GetLengthValueConfig): string => {
-    if (Array.isArray(length)) return `${length[0]}${length[1]}`;
+export type ResponsiveSize = ResponsiveProp<Size>;
 
-    if (typeof length === 'string') return `${theme.space[length]}`;
+export const getLengthValueFactory = (theme: Theme) => (
+    length: Length | ResponsiveLength | Size | ResponsiveSize,
+    breakpoint?: Breakpoint,
+): string | number => {
+    if (typeof length === 'string') return isSpace(length) ? `${theme.space[length]}` : length;
 
-    if (isResponsiveLength(length)) return length[breakpoint!] ? getLengthValue({ length: length[breakpoint!]!, theme }) : '';
+    if (typeof length === 'number') return length;
 
-    return `${length}px`;
-};
+    if (breakpoint) return length[breakpoint] ? getLengthValueFactory(theme)(length[breakpoint]!) : '';
 
-export const isResponsiveLength = (prop: unknown): prop is ResponsiveLength => {
-    return typeof prop === 'object';
+    return '';
 };
 
 export const getBreakpointsFromResponsiveProp = (prop: ResponsiveProp<unknown>): Breakpoint[] => {
     return Object.keys(prop).filter((b) => b !== undefined) as Breakpoint[];
 };
 
+const isResponsiveProp = <T>(prop: unknown): prop is ResponsiveProp<T> => {
+    return typeof prop === 'object';
+};
+
 export const getBreakpointsFromProps = (props: {}): Breakpoint[] => {
-    const responsiveProps = Object.values(props).filter(isResponsiveLength);
+    const responsiveProps = Object.values(props).filter(isResponsiveProp);
+
     return [...new Set(responsiveProps.flatMap(getBreakpointsFromResponsiveProp))];
+};
+
+export const isSpace = (value: unknown): value is Space => {
+    const spaceMap: Record<Space, true> = {
+        sm: true,
+        md: true,
+        lg: true,
+        xl: true,
+        '2xl': true,
+        none: true,
+    };
+
+    return spaceMap[value as Space];
 };
