@@ -2,9 +2,9 @@ import { Breakpoint, Space, Theme } from './Theme';
 
 export type CSSUnit = 'px' | '%' | 'rem' | 'em';
 
-export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
-
 export type Length = `${number}${CSSUnit}` | number | Space | 'auto';
+
+export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
 
 export type ResponsiveLength = ResponsiveProp<Length>;
 
@@ -25,15 +25,23 @@ export const getLengthValueFactory = (theme: Theme) => (
     return '';
 };
 
-export const getBreakpointsFromResponsiveProp = (prop: ResponsiveProp<unknown>): Breakpoint[] => {
+const getBreakpointsFromResponsiveProp = (prop: ResponsiveProp<unknown>): Breakpoint[] => {
     return Object.keys(prop).filter((b) => b !== undefined) as Breakpoint[];
 };
 
-const isResponsiveProp = <T>(prop: unknown): prop is ResponsiveProp<T> => {
-    return typeof prop === 'object';
+export const isResponsiveProp = (prop: any): prop is ResponsiveProp<unknown> => {
+    const breakpointMap: Record<Breakpoint, true> = {
+        sm: true,
+        md: true,
+        lg: true,
+        xl: true,
+        '2xl': true,
+    };
+
+    return Object.keys(prop).some((key) => breakpointMap[key as Breakpoint]);
 };
 
-export const getBreakpointsFromProps = (props: {}): Breakpoint[] => {
+export const getBreakpointsFromProps = (props: Record<string, any>): Breakpoint[] => {
     const responsiveProps = Object.values(props).filter(isResponsiveProp);
 
     return [...new Set(responsiveProps.flatMap(getBreakpointsFromResponsiveProp))];

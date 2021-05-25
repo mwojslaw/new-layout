@@ -8,6 +8,7 @@ export type WithSpacingConfig = Partial<{
     marginBottom: Length | ResponsiveLength;
     marginTop: Length | ResponsiveLength;
     marginX: Length | ResponsiveLength;
+    marginRight: Length | ResponsiveLength;
 
     padding: Length | ResponsiveLength;
     paddingX: Length | ResponsiveLength;
@@ -28,6 +29,7 @@ export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>):
         boxSizing: 'border-box',
         ...(config.margin && { margin: getLengthValue(config.margin) }),
         ...(config.marginBottom && { marginBottom: getLengthValue(config.marginBottom) }),
+        ...(config.marginRight && { marginRight: getLengthValue(config.marginRight) }),
         ...(config.marginTop && { marginTop: getLengthValue(config.marginTop) }),
         ...(config.marginX && {
             marginLeft: getLengthValue(config.marginX),
@@ -53,6 +55,7 @@ export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>):
                         marginLeft: getLengthValue(config.marginX, breakpoint),
                         marginRight: getLengthValue(config.marginX, breakpoint),
                     }),
+                    ...(config.marginRight && { marginRight: getLengthValue(config.marginRight, breakpoint) }),
 
                     ...(config.paddingX && {
                         paddingLeft: getLengthValue(config.paddingX, breakpoint),

@@ -14,7 +14,7 @@ export const Lengths = () => (
             Using string. number + unit (30px)
         </Box>
         <Box padding="md" color="white-light" background="gray-moderate" marginBottom="xl">
-            Using space alias from `theme.space` (32px)
+            Using space alias from `theme.space.xl` (32px)
         </Box>
         <Box padding="md" color="white-light" background="gray-moderate" marginBottom={{ sm: 20, md: '40px', lg: 'md' }}>
             Using responsive object, with breakpoint alias from `theme.breakpoints` (sm: 20px, md: 40px, lg: 8px)

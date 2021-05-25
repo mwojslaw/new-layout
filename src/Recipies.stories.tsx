@@ -7,22 +7,38 @@ export default {
 export const FlexboxGrid = () => (
     <>
         <Flex marginBottom="md" gap="md">
-            <Box height={100} background="gray-light" width="50%"></Box>
-            <Box height={100} background="gray-dark" color="gray-light" width="50%"></Box>
+            <Box height={100} background="gray-light" width="50%">
+                1/2
+            </Box>
+            <Box height={100} background="gray-dark" color="gray-light" width="50%">
+                1/2
+            </Box>
         </Flex>
         <Flex gap="md">
-            <Box height={100} background="black-dark" color="gray-light" width="75%"></Box>
-            <Box height={100} background="gray-light" width="25%"></Box>
+            <Box height={100} background="black-dark" color="gray-light" width="75%">
+                3/4
+            </Box>
+            <Box height={100} background="gray-light" width="25%">
+                1/4
+            </Box>
         </Flex>
     </>
 );
 
 export const FlexboxGridWrap = () => (
     <Flex flexWrap="wrap" gap="md">
-        <Box height={100} background="gray-light" width="50%"></Box>
-        <Box height={100} background="gray-dark" color="gray-light" width="50%"></Box>
-        <Box height={100} background="gray-dark" color="gray-light" width="75%"></Box>
-        <Box height={100} background="gray-light" width="25%"></Box>
+        <Box height={100} background="gray-light" width="50%">
+            1/2
+        </Box>
+        <Box height={100} background="gray-dark" color="gray-light" width="50%">
+            1/2
+        </Box>
+        <Box height={100} background="gray-dark" color="gray-light" width="75%">
+            3/4
+        </Box>
+        <Box height={100} background="gray-light" width="25%">
+            1/4
+        </Box>
     </Flex>
 );
 
@@ -43,15 +59,40 @@ export const Navbar = () => (
 export const TwoColumnsLayout = () => (
     <Flex flexDirection="column" height="100%" width="100%">
         <Navbar />
-        <Flex flex={1}>
-            <Box width={300} background="gray-moderate">
-                <ul>
-                    <li>Menu item</li>
-                    <li>Menu item</li>
-                    <li>Menu item</li>
-                    <li>Menu item</li>
-                    <li>Menu item</li>
-                </ul>
+        <Flex
+            flexDirection={{
+                sm: 'column',
+                md: 'row',
+            }}
+            flex={1}
+        >
+            <Box width={{ sm: '100%', md: '300px' }} background="gray-moderate">
+                <Flex
+                    style={{
+                        listStyle: 'none',
+                    }}
+                    flexDirection={{
+                        sm: 'row',
+                        md: 'column',
+                    }}
+                    as="ul"
+                >
+                    {[...new Array(5)].map(() => (
+                        <Box
+                            as="li"
+                            marginRight={{
+                                sm: 'md',
+                                md: 0,
+                            }}
+                            marginBottom={{
+                                sm: 0,
+                                md: 'md',
+                            }}
+                        >
+                            Menu item
+                        </Box>
+                    ))}
+                </Flex>
             </Box>
             <Box padding="md" flex={1} background="gray-light">
                 Content
