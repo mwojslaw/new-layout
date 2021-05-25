@@ -4,7 +4,7 @@ export type CSSUnit = 'px' | '%' | 'rem' | 'em';
 
 export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
 
-export type Length = `${number}${CSSUnit}` | number | Space;
+export type Length = `${number}${CSSUnit}` | number | Space | 'auto';
 
 export type ResponsiveLength = ResponsiveProp<Length>;
 

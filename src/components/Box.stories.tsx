@@ -5,45 +5,19 @@ export default {
     component: Box,
 };
 
-export const Spacing = () => (
+export const Lengths = () => (
     <>
-        <Box marginBottom={10}>Number margin, unit default to px</Box>
-        <Box marginBottom="10px">Number and unit string</Box>
-        <Box marginBottom="sm">Space margin sm</Box>
-        <Box marginBottom="md">Space margin md</Box>
-        <Box marginBottom="lg">Space margin lg</Box>
-
-        <Box marginBottom={{ sm: 20, md: '40px', lg: 'md' }} marginTop={{ sm: 'lg' }}>
-            Responsive margin
+        <Box padding="md" color="white-light" background="gray-moderate" marginBottom={10}>
+            Using number, unit default to px (10px)
         </Box>
-        <Box marginX={20}>marginX</Box>
-    </>
-);
-
-export const Size = () => (
-    <>
-        <Box width="20%" height="200px">
-            Width 20%
+        <Box padding="md" color="white-light" background="gray-moderate" marginBottom="30px">
+            Using string. number + unit (30px)
         </Box>
-        <Box
-            width={{
-                sm: '100%',
-                md: '75%',
-            }}
-            height={{
-                sm: 100,
-            }}
-        >
-            Responsive width
+        <Box padding="md" color="white-light" background="gray-moderate" marginBottom="xl">
+            Using space alias from `theme.space` (32px)
         </Box>
-    </>
-);
-
-export const Color = () => (
-    <>
-        <Box color="black-light">From color palette</Box>
-        <Box padding="md" background="black-dark" color="gray-light">
-            From color palette
+        <Box padding="md" color="white-light" background="gray-moderate" marginBottom={{ sm: 20, md: '40px', lg: 'md' }}>
+            Using responsive object, with breakpoint alias from `theme.breakpoints` (sm: 20px, md: 40px, lg: 8px)
         </Box>
     </>
 );

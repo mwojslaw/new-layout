@@ -5,6 +5,9 @@ import { Length, ResponsiveLength, getLengthValueFactory, getBreakpointsFromProp
 
 export type WithFlexConfig = Partial<{
     flexWrap: CSS.Property.FlexWrap;
+    flexDirection: CSS.Property.FlexDirection;
+    justifyContent: CSS.Property.JustifyContent;
+    alignItems: CSS.Property.AlignItems;
     gap: Length | ResponsiveLength;
 }>;
 
@@ -17,6 +20,9 @@ export const withFlex = ({ theme, ...config }: WithTheme<WithFlexConfig>): CSSOb
         display: 'flex',
         ...(config.gap ? { gap: getLengthValue(config.gap) } : {}),
         ...(config.flexWrap ? { flexWrap: config.flexWrap } : {}),
+        ...(config.alignItems ? { alignItems: config.alignItems } : {}),
+        ...(config.flexDirection ? { flexDirection: config.flexDirection } : {}),
+        ...(config.justifyContent ? { justifyContent: config.justifyContent } : {}),
 
         ...breakpoints.reduce(
             (rules, breakpoint) => ({

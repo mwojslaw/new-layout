@@ -4,7 +4,7 @@ export type Space = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none';
 
 export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
-type ColorName = 'black' | 'gray';
+type ColorName = 'black' | 'gray' | 'white';
 
 type ColorRange = 'light' | 'moderate' | 'dark';
 
@@ -42,8 +42,11 @@ export const theme: Theme = {
         'black-dark': 'black',
         'black-light': 'black',
         'black-moderate': 'black',
-        'gray-dark': 'gray',
-        'gray-light': 'gray',
-        'gray-moderate': 'gray',
+        'gray-dark': '#374151',
+        'gray-light': '#F3F4F6',
+        'gray-moderate': '#6B7280',
+        'white-dark': 'white',
+        'white-light': 'white',
+        'white-moderate': 'white',
     },
 };

@@ -1,6 +1,7 @@
 import { CSSObject } from 'styled-components';
 import { WithTheme } from '../Theme';
 import { getBreakpointsFromProps, Length, getLengthValueFactory, ResponsiveSize, ResponsiveLength, Size } from '../utils';
+import * as CSS from 'csstype';
 
 export type WithSpacingConfig = Partial<{
     margin: Length | ResponsiveLength;
@@ -10,8 +11,11 @@ export type WithSpacingConfig = Partial<{
 
     padding: Length | ResponsiveLength;
     paddingX: Length | ResponsiveLength;
+
     width: Size | ResponsiveSize;
     height: Size | ResponsiveSize;
+
+    flex: CSS.Property.Flex;
 }>;
 
 export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>): CSSObject => {
@@ -36,6 +40,7 @@ export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>):
 
         ...(config.width ? { width: getLengthValue(config.width) } : {}),
         ...(config.height ? { height: getLengthValue(config.height) } : {}),
+        ...(config.flex ? { flex: config.flex } : {}),
 
         ...breakpoints.reduce(
             (rules, breakpoint) => ({
