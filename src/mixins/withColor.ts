@@ -8,7 +8,7 @@ export type WithColorConfig = {
 
 export const withColor = ({ theme, ...config }: WithTheme<WithColorConfig>): CSSObject => {
     return {
-        ...(config.color ? { color: theme.colorPalette[config.color] } : {}),
-        ...(config.background ? { background: theme.colorPalette[config.background] } : {}),
+        ...(config.color && { color: theme.colorPalette[config.color] }),
+        ...(config.background && { background: theme.colorPalette[config.background] }),
     };
 };

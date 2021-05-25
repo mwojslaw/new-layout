@@ -18,17 +18,17 @@ export const withFlex = ({ theme, ...config }: WithTheme<WithFlexConfig>): CSSOb
 
     return {
         display: 'flex',
-        ...(config.gap ? { gap: getLengthValue(config.gap) } : {}),
-        ...(config.flexWrap ? { flexWrap: config.flexWrap } : {}),
-        ...(config.alignItems ? { alignItems: config.alignItems } : {}),
-        ...(config.flexDirection ? { flexDirection: config.flexDirection } : {}),
-        ...(config.justifyContent ? { justifyContent: config.justifyContent } : {}),
+        ...(config.gap && { gap: getLengthValue(config.gap) }),
+        ...(config.flexWrap && { flexWrap: config.flexWrap }),
+        ...(config.alignItems && { alignItems: config.alignItems }),
+        ...(config.flexDirection && { flexDirection: config.flexDirection }),
+        ...(config.justifyContent && { justifyContent: config.justifyContent }),
 
         ...breakpoints.reduce(
             (rules, breakpoint) => ({
                 ...rules,
                 [`@media(min-width: ${theme.breakpoints[breakpoint]})`]: {
-                    ...(config.gap ? { gap: getLengthValue(config.gap) } : {}),
+                    ...(config.gap && { gap: getLengthValue(config.gap) }),
                 },
             }),
             {},

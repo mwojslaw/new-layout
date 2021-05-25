@@ -59,3 +59,16 @@ export const TwoColumnsLayout = () => (
         </Flex>
     </Flex>
 );
+
+export const Card = () => (
+    <Box overflow="hidden" borderRadius="md" borderWidth="2px" borderStyle="solid" borderColor="gray-light" width={400}>
+        <img style={{ maxWidth: '100%' }} alt="Rear view of modern home with pool" src="https://bit.ly/2Z4KKcF" />
+        <Box padding="lg">
+            <p>3 BEDS • 2 BATHS</p>
+            <p>
+                <strong>Modern home in city center in Los Angeles.</strong>
+            </p>
+            $1,900.00/ wk
+        </Box>
+    </Box>
+);
