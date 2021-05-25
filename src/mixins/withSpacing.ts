@@ -3,15 +3,15 @@ import { WithTheme } from '../Theme';
 import { getBreakpointsFromProps, Length, getLengthValueFactory, ResponsiveSize, ResponsiveLength, Size } from '../utils';
 
 export type WithSpacingConfig = Partial<{
-    m: Length | ResponsiveLength;
-    mb: Length | ResponsiveLength;
-    mt: Length | ResponsiveLength;
-    mx: Length | ResponsiveLength;
+    margin: Length | ResponsiveLength;
+    marginBottom: Length | ResponsiveLength;
+    marginTop: Length | ResponsiveLength;
+    marginX: Length | ResponsiveLength;
 
-    p: Length | ResponsiveLength;
-    px: Length | ResponsiveLength;
-    w: Size | ResponsiveSize;
-    h: Size | ResponsiveSize;
+    padding: Length | ResponsiveLength;
+    paddingX: Length | ResponsiveLength;
+    width: Size | ResponsiveSize;
+    height: Size | ResponsiveSize;
 }>;
 
 export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>): CSSObject => {
@@ -21,40 +21,46 @@ export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>):
 
     return {
         boxSizing: 'border-box',
-        ...(config.m ? { margin: getLengthValue(config.m) } : {}),
-        ...(config.mb ? { marginBottom: getLengthValue(config.mb) } : {}),
-        ...(config.mt ? { marginTop: getLengthValue(config.mt) } : {}),
-        ...(config.mx
+        ...(config.margin ? { margin: getLengthValue(config.margin) } : {}),
+        ...(config.marginBottom ? { marginBottom: getLengthValue(config.marginBottom) } : {}),
+        ...(config.marginTop ? { marginTop: getLengthValue(config.marginTop) } : {}),
+        ...(config.marginX
             ? {
-                  marginLeft: getLengthValue(config.mx),
-                  marginRight: getLengthValue(config.mx),
+                  marginLeft: getLengthValue(config.marginX),
+                  marginRight: getLengthValue(config.marginX),
               }
             : {}),
 
-        ...(config.p ? { padding: getLengthValue(config.p) } : {}),
-        ...(config.px ? { paddingLeft: getLengthValue(config.px), paddingRight: getLengthValue(config.px) } : {}),
+        ...(config.padding ? { padding: getLengthValue(config.padding) } : {}),
+        ...(config.paddingX ? { paddingLeft: getLengthValue(config.paddingX), paddingRight: getLengthValue(config.paddingX) } : {}),
 
-        ...(config.w ? { width: getLengthValue(config.w) } : {}),
-        ...(config.h ? { height: getLengthValue(config.h) } : {}),
+        ...(config.width ? { width: getLengthValue(config.width) } : {}),
+        ...(config.height ? { height: getLengthValue(config.height) } : {}),
 
         ...breakpoints.reduce(
             (rules, breakpoint) => ({
                 ...rules,
                 [`@media(min-width: ${theme.breakpoints[breakpoint]})`]: {
-                    ...(config.m ? { margin: getLengthValue(config.m, breakpoint) } : {}),
-                    ...(config.mb ? { marginBottom: getLengthValue(config.mb, breakpoint) } : {}),
-                    ...(config.mt ? { marginTop: getLengthValue(config.mt, breakpoint) } : {}),
-                    ...(config.mx
-                        ? { marginLeft: getLengthValue(config.mx, breakpoint), marginRight: getLengthValue(config.mx, breakpoint) }
+                    ...(config.margin ? { margin: getLengthValue(config.margin, breakpoint) } : {}),
+                    ...(config.marginBottom ? { marginBottom: getLengthValue(config.marginBottom, breakpoint) } : {}),
+                    ...(config.marginTop ? { marginTop: getLengthValue(config.marginTop, breakpoint) } : {}),
+                    ...(config.marginX
+                        ? {
+                              marginLeft: getLengthValue(config.marginX, breakpoint),
+                              marginRight: getLengthValue(config.marginX, breakpoint),
+                          }
                         : {}),
 
-                    ...(config.px
-                        ? { paddingLeft: getLengthValue(config.px, breakpoint), paddingRight: getLengthValue(config.px, breakpoint) }
+                    ...(config.paddingX
+                        ? {
+                              paddingLeft: getLengthValue(config.paddingX, breakpoint),
+                              paddingRight: getLengthValue(config.paddingX, breakpoint),
+                          }
                         : {}),
-                    ...(config.p ? { padding: getLengthValue(config.p, breakpoint) } : {}),
+                    ...(config.padding ? { padding: getLengthValue(config.padding, breakpoint) } : {}),
 
-                    ...(config.w ? { width: getLengthValue(config.w, breakpoint) } : {}),
-                    ...(config.h ? { height: getLengthValue(config.h, breakpoint) } : {}),
+                    ...(config.width ? { width: getLengthValue(config.width, breakpoint) } : {}),
+                    ...(config.height ? { height: getLengthValue(config.height, breakpoint) } : {}),
                 },
             }),
             {},

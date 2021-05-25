@@ -5,7 +5,7 @@ import { Length, ResponsiveLength, getLengthValueFactory, getBreakpointsFromProp
 
 export type WithFlexConfig = Partial<{
     flexWrap: CSS.Property.FlexWrap;
-    g: Length | ResponsiveLength;
+    gap: Length | ResponsiveLength;
 }>;
 
 export const withFlex = ({ theme, ...config }: WithTheme<WithFlexConfig>): CSSObject => {
@@ -15,14 +15,14 @@ export const withFlex = ({ theme, ...config }: WithTheme<WithFlexConfig>): CSSOb
 
     return {
         display: 'flex',
-        ...(config.g ? { gap: getLengthValue(config.g) } : {}),
+        ...(config.gap ? { gap: getLengthValue(config.gap) } : {}),
         ...(config.flexWrap ? { flexWrap: config.flexWrap } : {}),
 
         ...breakpoints.reduce(
             (rules, breakpoint) => ({
                 ...rules,
                 [`@media(min-width: ${theme.breakpoints[breakpoint]})`]: {
-                    ...(config.g ? { gap: getLengthValue(config.g) } : {}),
+                    ...(config.gap ? { gap: getLengthValue(config.gap) } : {}),
                 },
             }),
             {},
