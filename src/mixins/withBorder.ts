@@ -10,13 +10,13 @@ export type WithBorderConfig = Partial<{
     borderRadius: Length;
 }>;
 
-export const withBorder = ({ theme, ...config }: WithTheme<WithBorderConfig>): CSSObject => {
+export const withBorder = ({ theme, borderStyle, ...config }: WithTheme<WithBorderConfig>): CSSObject => {
     const getLengthValue = getLengthValueFactory(theme);
 
     return {
+        borderStyle,
         ...(config.borderWidth && { borderWidth: getLengthValue(config.borderWidth) }),
         ...(config.borderColor && { borderColor: theme.colorPalette[config.borderColor] }),
-        ...(config.borderStyle && { borderStyle: config.borderStyle }),
         ...(config.borderRadius && { borderRadius: getLengthValue(config.borderRadius) }),
     };
 };

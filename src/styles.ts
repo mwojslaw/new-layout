@@ -7,8 +7,4 @@ export const Styles = createGlobalStyle`
     html, body, #root { 
         height: 100%;
     }
-
-    * {
-        box-sizing: border-box;
-    }
 `;

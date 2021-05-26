@@ -1,8 +1,16 @@
 import { modularScale } from 'polished';
 
-export type Space = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none';
+export const spaces = ['sm', 'md', 'lg', 'xl', '2xl', 'none'] as const;
 
-export type Breakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+export type Space = typeof spaces[number];
+
+export const isSpace = (x: unknown): x is Space => spaces.includes(x as any);
+
+export const breakpoints = ['sm', 'md', 'lg', 'xl', '2xl'] as const;
+
+export type Breakpoint = typeof breakpoints[number];
+
+export const isBreakpoint = (x: unknown): x is Breakpoint => breakpoints.includes(x as any);
 
 type ColorName = 'black' | 'gray' | 'white';
 

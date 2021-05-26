@@ -1,4 +1,4 @@
-import { Breakpoint, Space, Theme } from './Theme';
+import { Breakpoint, Space, Theme, isBreakpoint, isSpace } from './Theme';
 
 export type CSSUnit = 'px' | '%' | 'rem' | 'em';
 
@@ -8,7 +8,7 @@ export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
 
 export type ResponsiveLength = ResponsiveProp<Length>;
 
-export type Size = `${number}${CSSUnit}` | number;
+export type Size = Exclude<Length, Space>;
 
 export type ResponsiveSize = ResponsiveProp<Size>;
 
@@ -29,33 +29,14 @@ const getBreakpointsFromResponsiveProp = (prop: ResponsiveProp<unknown>): Breakp
     return Object.keys(prop).filter((b) => b !== undefined) as Breakpoint[];
 };
 
-export const isResponsiveProp = (prop: any): prop is ResponsiveProp<unknown> => {
-    const breakpointMap: Record<Breakpoint, true> = {
-        sm: true,
-        md: true,
-        lg: true,
-        xl: true,
-        '2xl': true,
-    };
+export const isResponsiveProp = <T>(prop: Required<unknown>): prop is ResponsiveProp<T> => {
+    if (typeof prop !== 'object') return false;
 
-    return Object.keys(prop).some((key) => breakpointMap[key as Breakpoint]);
+    return Object.keys(prop).some(isBreakpoint);
 };
 
 export const getBreakpointsFromProps = (props: Record<string, any>): Breakpoint[] => {
     const responsiveProps = Object.values(props).filter(isResponsiveProp);
 
     return [...new Set(responsiveProps.flatMap(getBreakpointsFromResponsiveProp))];
-};
-
-export const isSpace = (value: unknown): value is Space => {
-    const spaceMap: Record<Space, true> = {
-        sm: true,
-        md: true,
-        lg: true,
-        xl: true,
-        '2xl': true,
-        none: true,
-    };
-
-    return spaceMap[value as Space];
 };
