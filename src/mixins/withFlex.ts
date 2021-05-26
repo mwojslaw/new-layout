@@ -3,13 +3,13 @@ import { WithTheme } from '../Theme';
 import * as CSS from 'csstype';
 import { Length, ResponsiveLength, ResponsiveProp, getLengthValueFactory, getBreakpointsFromProps, isResponsiveProp } from '../utils';
 
-export type WithFlexConfig = Partial<{
-    flexWrap: CSS.Property.FlexWrap;
-    flexDirection: CSS.Property.FlexDirection | ResponsiveProp<CSS.Property.FlexDirection>;
-    justifyContent: CSS.Property.JustifyContent;
-    alignItems: CSS.Property.AlignItems;
-    gap: Length | ResponsiveLength;
-}>;
+export type WithFlexConfig = {
+    flexWrap?: CSS.Property.FlexWrap;
+    flexDirection?: CSS.Property.FlexDirection | ResponsiveProp<CSS.Property.FlexDirection>;
+    justifyContent?: CSS.Property.JustifyContent;
+    alignItems?: CSS.Property.AlignItems;
+    gap?: Length | ResponsiveLength;
+};
 
 export const withFlex = ({ theme, ...config }: WithTheme<WithFlexConfig>): CSSObject => {
     const breakpoints = getBreakpointsFromProps(config);

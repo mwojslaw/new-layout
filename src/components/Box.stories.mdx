@@ -8,36 +8,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
 Universal layout component with common properties, designed to be used as a base for any other component.
 Exposes css api like: margins, paddings, borders and colors.
 
-## Length
+## API
+
+#### Length
 
 All length base properties like margins, paddings, border width, border radius are exposing the same api for setting values. We have four different types of values you can use:
 
--   Using with number (fallback to `px` unit).
+-   Number (fallback to `px` unit).
 
 ```jsx
 <Box marginBottom={10} />
 ```
 
--   Using with number + unit combination. No arbitrary strings, this is strongly typed.
+-   Number + unit combination. `No arbitrary strings, this is strongly typed`.
 
 ```jsx
 <Box marginBottom="15em" />
 ```
 
--   Using with alias from `theme.space` object.
+-   Space, using alias from `theme.space` object. `No arbitrary strings, this is strongly typed`.
 
 ```jsx
 <Box marginBottom="sm" />
 ```
 
--   Using with responsive object. Keys from `theme.breakpoints` with any value from exaples above.
+-   Responsive object. Keys from `theme.breakpoints` with any value from exaples above.
     Implemented with `@media(min-width)` media query to ensure interfaces are mobile-first.
 
 ```jsx
 <Box marginBottom={{ sm: 20, md: '40px', lg: 'md' }} />
 ```
 
-## Size
+#### Size
 
 Properties like width, height, minWidth. Same api as length properties minus space api.
 
@@ -48,10 +50,77 @@ Properties like width, height, minWidth. Same api as length properties minus spa
 
 ```
 
-## Color
+#### Color
 
 Properties like color, background. Strongly types, values from `theme.colorPallete`.
 
 ```jsx
 <Box color="gray-light" background="black-moderate" />
+```
+
+## Patterns
+
+#### Composition
+
+Build custom components using primitives like `Box` or `Flex`. I would not advice you to use classical inheritance here, because in most cases you don't want to expose complete API of those primitives.
+A common pattern for composition could look like that:
+
+```jsx
+import * as React from 'react';
+import { Flex } from './Flex';
+import { Space } from '../Theme';
+
+type HeaderSize = Extract<Space, 'sm' | 'md'>;
+
+type HeaderProps = {
+    size: HeaderSize,
+};
+
+export const Header: React.FC<HeaderProps> = ({ children, size }) => (
+    <Flex
+        alignItems="center"
+        height={size === 'sm' ? 30 : 60}
+        padding="md"
+        marginBottom="sm"
+        background="gray-moderate"
+        color="white-light"
+    >
+        {children}
+    </Flex>
+);
+```
+
+When building other primitives, opposite patten could be useful:
+
+```jsx
+import * as React from 'react';
+import { BoxProps, Box } from './Box';
+
+type TextProps = Omit<BoxProps, 'display'>;
+
+export const Text: React.FC<TextProps> = ({ children, ...props }) => (
+    <Box display="inline-block" {...props}>
+        {children}
+    </Box>
+);
+```
+
+#### Striping down low-level Length API
+
+When we're building business components it could be a good idea, not to expose complete length api.
+Maybe we want to use just space api for consistency.
+I could be easly done with a bit of typescript manipulations.
+
+```jsx
+import * as React from 'react';
+import { BoxProps, Box } from './Box';
+import { Space } from '../Theme';
+
+type ReplaceEveryPropOfType<Type, OfType, ToType> = {
+    [K in keyof Type]: Type[K] extends OfType ? ToType : Type[K];
+};
+
+type TextProps = ReplaceEveryPropOfType<BoxProps, BoxProps['margin'], Space>;
+
+export const Text: React.FC<TextProps> = ({ children, ...props }) => <Box {...props}>{children}</Box>;
 ```

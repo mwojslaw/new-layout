@@ -3,22 +3,23 @@ import { WithTheme } from '../Theme';
 import { getBreakpointsFromProps, Length, getLengthValueFactory, ResponsiveSize, ResponsiveLength, Size } from '../utils';
 import * as CSS from 'csstype';
 
-export type WithSpacingConfig = Partial<{
-    margin: Length | ResponsiveLength;
-    marginBottom: Length | ResponsiveLength;
-    marginTop: Length | ResponsiveLength;
-    marginX: Length | ResponsiveLength;
-    marginRight: Length | ResponsiveLength;
+export type WithSpacingConfig = {
+    margin?: Length | ResponsiveLength;
+    marginBottom?: Length | ResponsiveLength;
+    marginTop?: Length | ResponsiveLength;
+    marginX?: Length | ResponsiveLength;
+    marginRight?: Length | ResponsiveLength;
 
-    padding: Length | ResponsiveLength;
-    paddingX: Length | ResponsiveLength;
+    padding?: Length | ResponsiveLength;
+    paddingX?: Length | ResponsiveLength;
 
-    width: Size | ResponsiveSize;
-    height: Size | ResponsiveSize;
+    width?: Size | ResponsiveSize;
+    height?: Size | ResponsiveSize;
 
-    flex: CSS.Property.Flex;
-    overflow: CSS.Property.Overflow;
-}>;
+    flex?: CSS.Property.Flex;
+    overflow?: CSS.Property.Overflow;
+    display?: CSS.Property.Display;
+};
 
 export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>): CSSObject => {
     const breakpoints = getBreakpointsFromProps(config);
@@ -43,6 +44,7 @@ export const withSpacing = ({ theme, ...config }: WithTheme<WithSpacingConfig>):
         ...(config.height && { height: getLengthValue(config.height) }),
         ...(config.flex && { flex: config.flex }),
         ...(config.overflow && { overflow: config.overflow }),
+        ...(config.display && { display: config.display }),
 
         ...breakpoints.reduce(
             (rules, breakpoint) => ({

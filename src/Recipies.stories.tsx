@@ -25,23 +25,6 @@ export const FlexboxGrid = () => (
     </>
 );
 
-export const FlexboxGridWrap = () => (
-    <Flex flexWrap="wrap" gap="md">
-        <Box height={100} background="gray-light" width="50%">
-            1/2
-        </Box>
-        <Box height={100} background="gray-dark" color="gray-light" width="50%">
-            1/2
-        </Box>
-        <Box height={100} background="gray-dark" color="gray-light" width="75%">
-            3/4
-        </Box>
-        <Box height={100} background="gray-light" width="25%">
-            1/4
-        </Box>
-    </Flex>
-);
-
 export const CenteredContainer = () => (
     <Flex flexDirection="column" background="black-dark" width="100%" height="100%" alignItems="center" justifyContent="center">
         <Box background="white-dark" width={100} height={100}></Box>
@@ -56,7 +39,7 @@ export const Navbar = () => (
     </Flex>
 );
 
-export const TwoColumnsLayout = () => (
+export const ResponsiveTwoColumnsLayout = () => (
     <Flex flexDirection="column" height="100%" width="100%">
         <Navbar />
         <Flex

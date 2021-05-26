@@ -8,7 +8,7 @@ export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
 
 export type ResponsiveLength = ResponsiveProp<Length>;
 
-export type Size = Exclude<Length, Space>;
+export type Size = `${number}${CSSUnit}` | number | Space;
 
 export type ResponsiveSize = ResponsiveProp<Size>;
 
