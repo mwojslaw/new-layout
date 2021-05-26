@@ -1,0 +1,57 @@
+import { Box } from './Box';
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Components/Box" component={Box} />
+
+# Box
+
+Universal layout component with common properties, designed to be used as a base for any other component.
+Exposes css api like: margins, paddings, borders and colors.
+
+## Length
+
+All length base properties like margins, paddings, border width, border radius are exposing the same api for setting values. We have four different types of values you can use:
+
+-   Using with number (fallback to `px` unit).
+
+```jsx
+<Box marginBottom={10} />
+```
+
+-   Using with number + unit combination. No arbitrary strings, this is strongly typed.
+
+```jsx
+<Box marginBottom="15em" />
+```
+
+-   Using with alias from `theme.space` object.
+
+```jsx
+<Box marginBottom="sm" />
+```
+
+-   Using with responsive object. Keys from `theme.breakpoints` with any value from exaples above.
+    Implemented with `@media(min-width)` media query to ensure interfaces are mobile-first.
+
+```jsx
+<Box marginBottom={{ sm: 20, md: '40px', lg: 'md' }} />
+```
+
+## Size
+
+Properties like width, height, minWidth. Same api as length properties minus space api.
+
+```jsx
+<Box width={100} />
+<Box width="100%" />
+<Box width={{sm: '100%', md: '75%'}} />
+
+```
+
+## Color
+
+Properties like color, background. Strongly types, values from `theme.colorPallete`.
+
+```jsx
+<Box color="gray-light" background="black-moderate" />
+```

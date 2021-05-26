@@ -1,7 +1,7 @@
 import { Box, Flex } from './components';
 
 export default {
-    title: 'Recipies',
+    title: 'Recipes',
 };
 
 export const FlexboxGrid = () => (
