@@ -5,8 +5,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Box
 
-Universal layout component with common properties, designed to be used as a base for any other component.
-Exposes css api like: margins, paddings, borders and colors.
+-   Primitive component for all your layout needs
+-   Ergonomic and responsive values
+-   Themeable
+-   Build from composition
 
 ## API
 
@@ -107,8 +109,8 @@ export const Text: React.FC<TextProps> = ({ children, ...props }) => (
 
 #### Striping down low-level Length API
 
-When we're building business components it could be a good idea, not to expose complete length api.
-Maybe we want to use just space api for consistency.
+When building business components it could be a good idea, not to expose complete length api.
+Maybe we want just space api for consistency.
 I could be easly done with a bit of typescript manipulations.
 
 ```jsx
@@ -122,5 +124,5 @@ type ReplaceEveryPropOfType<Type, OfType, ToType> = {
 
 type TextProps = ReplaceEveryPropOfType<BoxProps, BoxProps['margin'], Space>;
 
-export const Text: React.FC<TextProps> = ({ children, ...props }) => <Box {...props}>{children}</Box>;
+export const Text: React.FC<TextProps> = ({ children, ...props }) => <Box display="inline-block" {...props}>{children}</Box>;
 ```
