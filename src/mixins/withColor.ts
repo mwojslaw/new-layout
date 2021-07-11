@@ -6,7 +6,7 @@ export type WithColorConfig = {
     background?: Color;
 };
 
-export const withColor = ({ theme, color, background }: WithTheme<WithColorConfig>): Partial<Record<keyof CSS.Properties, any>> => ({
+export const withColor = ({ theme, color, background }: WithTheme<WithColorConfig>): CSS.Properties => ({
     color: color && theme.colorPalette[color],
     background: background && theme.colorPalette[background],
 });

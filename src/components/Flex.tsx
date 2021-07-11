@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useFela } from 'react-fela';
 import { Box, BoxProps } from './Box';
 import { WithFlexConfig, withFlex } from '../mixins';
-import { Theme } from '../Theme';
 
 export type FlexProps<T extends React.ElementType> = WithFlexConfig & BoxProps<T>;
 
@@ -17,7 +16,7 @@ export function Flex<T extends React.ElementType = 'div'>({
     children,
     ...props
 }: FlexProps<T>) {
-    const { css } = useFela<Theme>();
+    const { css } = useFela();
 
     const style = mixins.map((mixin) =>
         mixin({

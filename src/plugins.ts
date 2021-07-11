@@ -1,24 +1,28 @@
 import { getResponsiveProps, getBreakpointsFromResponsiveProp } from './utils';
 import { TPlugin } from 'fela';
-import { Theme, isSpace } from './Theme';
+import { Theme, isSpace, WithTheme } from './Theme';
 
-export const spacePlugin: TPlugin = (style, type, renderer, properties) => {
-    const { theme: almostTheme } = properties;
+const mapValue = (value: any, theme: Theme) => {
+    if (typeof value === 'number') return `${value}px`;
 
-    const theme = almostTheme as Theme;
+    if (isSpace(value)) return `${theme.space[value]}`;
+
+    return value;
+};
+
+export const spacePlugin: TPlugin<WithTheme<Record<string, unknown>>> = (style, type, renderer, properties) => {
+    const { theme } = properties;
 
     return Object.entries(style).reduce((styles, [key, value]) => {
         return {
             ...styles,
-            [key]: isSpace(value) ? `${theme.space[value]}` : value,
+            [key]: mapValue(value, theme),
         };
     }, {});
 };
 
-export const responsivePropsPlugin: TPlugin = (style, type, renderer, properties) => {
-    const { theme: almostTheme } = properties;
-
-    const theme = almostTheme as Theme;
+export const responsivePropsPlugin: TPlugin<WithTheme<Record<string, unknown>>> = (style, type, renderer, properties) => {
+    const { theme } = properties;
 
     const responsiveRules = getResponsiveProps(style);
 

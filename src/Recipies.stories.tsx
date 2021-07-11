@@ -1,4 +1,5 @@
 import { Box, Flex } from './components';
+import * as React from 'react';
 
 export default {
     title: 'Recipes',
@@ -7,7 +8,7 @@ export default {
 export const FlexboxGrid = () => (
     <>
         <Flex marginBottom="md" gap="md">
-            <Box height="100px" background="gray-light" width="50%">
+            <Box height={100} background="gray-light" width="50%">
                 1/2
             </Box>
             <Box height="100px" background="gray-dark" color="gray-light" width="50%">
@@ -96,3 +97,17 @@ export const Card = () => (
         </Box>
     </Box>
 );
+
+const Parent = () => {
+    const [state, setState] = React.useState(0);
+    return (
+        <div>
+            <Box width="sm" />
+            <button onClick={() => setState(state + 1)}>a</button>
+        </div>
+    );
+};
+
+export const Test = () => {
+    return <Parent />;
+};

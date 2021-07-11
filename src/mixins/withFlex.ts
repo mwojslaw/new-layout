@@ -1,5 +1,5 @@
 import * as CSS from 'csstype';
-import { Length, ResponsiveLength, ResponsiveProp } from '../utils';
+import { Length, ResponsiveLength, ResponsiveProp, Prefer } from '../utils';
 
 export type WithFlexConfig = {
     flexWrap?: CSS.Property.FlexWrap;
@@ -15,7 +15,7 @@ export const withFlex = ({
     justifyContent,
     alignItems,
     flexDirection,
-}: WithFlexConfig): Partial<Record<keyof CSS.Properties, any>> => ({
+}: WithFlexConfig): Prefer<WithFlexConfig, CSS.Properties> => ({
     display: 'flex',
     flexWrap,
     gap,
