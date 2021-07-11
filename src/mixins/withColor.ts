@@ -1,14 +1,12 @@
-import { CSSObject } from 'styled-components';
 import { Color, WithTheme } from '../Theme';
+import * as CSS from 'csstype';
 
 export type WithColorConfig = {
     color?: Color;
     background?: Color;
 };
 
-export const withColor = ({ theme, ...config }: WithTheme<WithColorConfig>): CSSObject => {
-    return {
-        ...(config.color && { color: theme.colorPalette[config.color] }),
-        ...(config.background && { background: theme.colorPalette[config.background] }),
-    };
-};
+export const withColor = ({ theme, color, background }: WithTheme<WithColorConfig>): Partial<Record<keyof CSS.Properties, any>> => ({
+    color: color && theme.colorPalette[color],
+    background: background && theme.colorPalette[background],
+});

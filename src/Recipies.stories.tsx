@@ -7,18 +7,18 @@ export default {
 export const FlexboxGrid = () => (
     <>
         <Flex marginBottom="md" gap="md">
-            <Box height={100} background="gray-light" width="50%">
+            <Box height="100px" background="gray-light" width="50%">
                 1/2
             </Box>
-            <Box height={100} background="gray-dark" color="gray-light" width="50%">
+            <Box height="100px" background="gray-dark" color="gray-light" width="50%">
                 1/2
             </Box>
         </Flex>
         <Flex gap="md">
-            <Box height={100} background="black-dark" color="gray-light" width="75%">
+            <Box height="100px" background="black-dark" color="gray-light" width="75%">
                 3/4
             </Box>
-            <Box height={100} background="gray-light" width="25%">
+            <Box height="100px" background="gray-light" width="25%">
                 1/4
             </Box>
         </Flex>
@@ -27,12 +27,12 @@ export const FlexboxGrid = () => (
 
 export const CenteredContainer = () => (
     <Flex flexDirection="column" background="black-dark" width="100%" height="100%" alignItems="center" justifyContent="center">
-        <Box background="white-dark" width={100} height={100}></Box>
+        <Box background="white-dark" width="100px" height="100px"></Box>
     </Flex>
 );
 
 export const Navbar = () => (
-    <Flex height={50} paddingX="lg" color="white-light" background="black-dark" alignItems="center">
+    <Flex height="50px" paddingX="lg" color="white-light" background="black-dark" alignItems="center">
         Home
         <Box marginX="auto" />
         <a href="/profile">Profile</a>
@@ -65,10 +65,10 @@ export const ResponsiveTwoColumnsLayout = () => (
                             as="li"
                             marginRight={{
                                 sm: 'md',
-                                md: 0,
+                                md: '0px',
                             }}
                             marginBottom={{
-                                sm: 0,
+                                sm: '0px',
                                 md: 'md',
                             }}
                         >
@@ -85,7 +85,7 @@ export const ResponsiveTwoColumnsLayout = () => (
 );
 
 export const Card = () => (
-    <Box overflow="hidden" borderRadius="md" borderWidth="2px" borderStyle="solid" borderColor="gray-light" width={400}>
+    <Box overflow="hidden" borderRadius="md" borderWidth="2px" borderStyle="solid" borderColor="gray-light" width="400px">
         <img style={{ maxWidth: '100%' }} alt="Rear view of modern home with pool" src="https://bit.ly/2Z4KKcF" />
         <Box padding="lg">
             <p>3 BEDS • 2 BATHS</p>

@@ -1,6 +1,5 @@
-import { CSSObject } from 'styled-components';
 import { WithTheme, Color } from '../Theme';
-import { Length, getLengthValueFactory } from '../utils';
+import { Length } from '../utils';
 import * as CSS from 'csstype';
 
 export type WithBorderConfig = {
@@ -10,13 +9,15 @@ export type WithBorderConfig = {
     borderRadius?: Length;
 };
 
-export const withBorder = ({ theme, borderStyle, ...config }: WithTheme<WithBorderConfig>): CSSObject => {
-    const getLengthValue = getLengthValueFactory(theme);
-
-    return {
-        borderStyle,
-        ...(config.borderWidth && { borderWidth: getLengthValue(config.borderWidth) }),
-        ...(config.borderColor && { borderColor: theme.colorPalette[config.borderColor] }),
-        ...(config.borderRadius && { borderRadius: getLengthValue(config.borderRadius) }),
-    };
-};
+export const withBorder = ({
+    borderStyle,
+    borderColor,
+    borderRadius,
+    borderWidth,
+    theme,
+}: WithTheme<WithBorderConfig>): Partial<Record<keyof CSS.Properties, any>> => ({
+    borderStyle,
+    borderWidth,
+    borderRadius,
+    borderColor: borderColor && theme.colorPalette[borderColor],
+});

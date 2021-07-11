@@ -1,6 +1,8 @@
-import { ThemeProvider } from 'styled-components';
 import { theme } from '../src/Theme';
-import { Styles } from '../src/styles';
+import { RendererProvider, ThemeProvider } from 'react-fela';
+import { createRenderer } from 'fela';
+import { responsivePropsPlugin, spacePlugin } from '../src/plugins';
+import { normalize } from 'polished';
 
 export const parameters = {
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -12,11 +14,26 @@ export const parameters = {
     },
 };
 
+const renderer = createRenderer({
+    plugins: [spacePlugin, responsivePropsPlugin],
+});
+
 export const decorators = [
-    (Story) => (
-        <ThemeProvider theme={theme}>
-            <Story />
-            <Styles />
-        </ThemeProvider>
-    ),
+    (Story) => {
+        renderer.renderStatic(`
+            ${normalize()};
+
+            html, body, #root { 
+                height: 100%;
+            }
+        `);
+
+        return (
+            <RendererProvider renderer={renderer}>
+                <ThemeProvider theme={theme}>
+                    <Story />
+                </ThemeProvider>
+            </RendererProvider>
+        );
+    },
 ];
