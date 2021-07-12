@@ -3,7 +3,7 @@ import { Breakpoint, Space, isBreakpoint } from './Theme';
 
 export type CSSUnit = 'px' | '%' | 'rem' | 'em';
 
-export type Length = `${number}${CSSUnit}` | Space | number | 'auto';
+export type Length = `${number}${CSSUnit}` | Space | 'auto';
 
 export type ResponsiveProp<T> = Partial<Record<Breakpoint, T>>;
 

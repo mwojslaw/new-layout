@@ -1,51 +1,42 @@
 import { getResponsiveProps, getBreakpointsFromResponsiveProp } from './utils';
 import { TPlugin } from 'fela';
-import { Theme, isSpace, WithTheme } from './Theme';
+import { isSpace, WithTheme } from './Theme';
 
-const mapValue = (value: any, theme: Theme) => {
-    if (typeof value === 'number') return `${value}px`;
-
-    if (isSpace(value)) return `${theme.space[value]}`;
-
-    return value;
-};
-
-export const spacePlugin: TPlugin<WithTheme<Record<string, unknown>>> = (style, type, renderer, properties) => {
+export const spacePlugin: TPlugin<WithTheme<Record<string, unknown>>> = (style: any, type, renderer, properties) => {
     const { theme } = properties;
 
-    return Object.entries(style).reduce((styles, [key, value]) => {
-        return {
-            ...styles,
-            [key]: mapValue(value, theme),
-        };
-    }, {});
+    let result = style;
+    for (const rule in style) {
+        const value = style[rule];
+
+        if (isSpace(value)) {
+            result[rule] = `${theme.space[value]}`;
+        }
+    }
+
+    return result;
 };
 
-export const responsivePropsPlugin: TPlugin<WithTheme<Record<string, unknown>>> = (style, type, renderer, properties) => {
+export const responsivePropsPlugin: TPlugin<WithTheme<Record<string, unknown>>> = (style: any, type, renderer, properties) => {
     const { theme } = properties;
 
     const responsiveRules = getResponsiveProps(style);
 
+    if (!responsiveRules.length) return style;
+
     const breakpoints = [...new Set(responsiveRules.flatMap(([_, value]) => getBreakpointsFromResponsiveProp(value)))];
 
-    return {
-        ...style,
-        ...breakpoints.reduce(
-            (rules, breakpoint) => ({
-                ...rules,
-                [`@media(min-width: ${theme.breakpoints[breakpoint]})`]: {
-                    ...responsiveRules.reduce((result, rule) => {
-                        const [property, responsiveValue] = rule;
-                        const value = responsiveValue[breakpoint];
+    let result = style;
 
-                        return {
-                            ...result,
-                            [property]: value,
-                        };
-                    }, {}),
-                },
-            }),
-            {},
-        ),
-    };
+    for (const breakpoint of breakpoints) {
+        result[`@media(min-width: ${theme.breakpoints[breakpoint]})`] = {};
+
+        for (const rule of responsiveRules) {
+            const [property, responsiveValue] = rule;
+            const value = responsiveValue[breakpoint];
+            result[`@media(min-width: ${theme.breakpoints[breakpoint]})`][property] = value;
+        }
+    }
+
+    return result;
 };

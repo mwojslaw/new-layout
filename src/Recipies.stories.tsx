@@ -8,7 +8,7 @@ export default {
 export const FlexboxGrid = () => (
     <>
         <Flex marginBottom="md" gap="md">
-            <Box height={100} background="gray-light" width="50%">
+            <Box height="100px" background="gray-light" width="50%">
                 1/2
             </Box>
             <Box height="100px" background="gray-dark" color="gray-light" width="50%">
@@ -102,7 +102,18 @@ const Parent = () => {
     const [state, setState] = React.useState(0);
     return (
         <div>
-            <Box width="sm" />
+            <Box
+                flex={1}
+                width="sm"
+                height="lg"
+                borderWidth="md"
+                color="gray-dark"
+                marginBottom="none"
+                display="block"
+                margin="none"
+                padding="sm"
+                background="gray-moderate"
+            />
             <button onClick={() => setState(state + 1)}>a</button>
         </div>
     );
